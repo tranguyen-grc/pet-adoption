@@ -1,6 +1,5 @@
 package com.zybooks.todolist.ui
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,9 +11,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.DismissState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.SwipeToDismiss
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberDismissState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -49,7 +46,6 @@ fun ToDoScreen(
    }
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun TaskList(
    taskList: List<Task>,
@@ -60,22 +56,10 @@ fun TaskList(
    LazyColumn {
       items(
          items = taskList,
-         key = { task -> task.id }
       ) { task ->
-         val dismissState = rememberDismissState()
-
-         SwipeToDismiss(
-            state = dismissState,
-            background = { SwipeBackground(dismissState) },
-            modifier = Modifier
-               .padding(vertical = 1.dp)
-               .animateItemPlacement(),
-            dismissContent = {
-               TaskCard(
-                  task = task,
-                  toggleCompleted = onToggleTaskComplete
-               )
-            }
+         TaskCard(
+            task = task,
+            toggleCompleted = onToggleTaskComplete
          )
       }
    }
